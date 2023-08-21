@@ -1,9 +1,7 @@
-// import React from 'react';
-
-const Header = (data) => {
+const Header = ({course}) => {
   return (
     <div>
-      <h1>{data.course}</h1>
+      <h1>{course.name}</h1>
     </div>
   )
 }
@@ -14,27 +12,28 @@ const Part = ({part, exercises}) => {
   )
 }
 
-const Content = ({parts}) => {
+const Content = ({course}) => {
   return (
     <div>
-    <Part part={parts[0].name} exercises={parts[0].exercises}/>
-    <Part part={parts[1].name} exercises={parts[1].exercises}/>
-    <Part part={parts[2].name} exercises={parts[2].exercises}/>
+    <Part part={course.parts[0].name} exercises={course.parts[0].exercises}/>
+    <Part part={course.parts[1].name} exercises={course.parts[1].exercises}/>
+    <Part part={course.parts[2].name} exercises={course.parts[2].exercises}/>
     </div>
   )
 }
 
-const Total = ({parts}) => {
+const Total = ({course}) => {
   return (
     <div>
-      <p>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>
+      <p>Number of exercises {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises}</p>
     </div>
   )
 }
 
 const App = () => {
-  const course = 'Half Stack application development';
-  const parts = [
+  const course = {
+  name: 'Half Stack application development',
+  parts: [
     {
       name: "Fundamentals of React",
       exercises: 10,
@@ -47,13 +46,13 @@ const App = () => {
       name: "State of a component",
       exercises: 14,
     },
-  ];
+  ]}
 
   return (
     <>
-      <Header data={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Header course={course} />
+      <Content course={course} />
+      <Total course={course} />
     </>
   )
 }

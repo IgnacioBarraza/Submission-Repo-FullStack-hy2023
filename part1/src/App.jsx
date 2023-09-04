@@ -1,58 +1,31 @@
-const Header = ({course}) => {
-  return (
-    <div>
-      <h1>{course.name}</h1>
-    </div>
-  )
-}
+import { useState } from "react"
 
-const Part = ({part, exercises}) => {
-  return (
-    <p>{part} {exercises}</p>
-  )
-}
+const Button = ({handleFeedback, text}) => <button onClick={handleFeedback}>{text}</button>
 
-const Content = ({course}) => {
-  return (
-    <div>
-    <Part part={course.parts[0].name} exercises={course.parts[0].exercises}/>
-    <Part part={course.parts[1].name} exercises={course.parts[1].exercises}/>
-    <Part part={course.parts[2].name} exercises={course.parts[2].exercises}/>
-    </div>
-  )
-}
-
-const Total = ({course}) => {
-  return (
-    <div>
-      <p>Number of exercises {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises}</p>
-    </div>
-  )
-}
+const Display = ({text, count}) => <div>{text} {count}</div>
 
 const App = () => {
-  const course = {
-  name: 'Half Stack application development',
-  parts: [
-    {
-      name: "Fundamentals of React",
-      exercises: 10,
-    },
-    {
-      name: "Using props to pass data",
-      exercises: 7,
-    },
-    {
-      name: "State of a component",
-      exercises: 14,
-    },
-  ]}
+
+  const [ good, setGood ] = useState(0);
+  const [ neutral, setNeutral ] = useState(0);
+  const [ bad, setBad ] = useState(0);
+
+  const incrementGood = () => setGood(good + 1);
+  const incrementNeutral = () => setNeutral(neutral + 1);
+  const incrementBad = () => setBad(bad + 1);
 
   return (
     <>
-      <Header course={course} />
-      <Content course={course} />
-      <Total course={course} />
+      <div>
+        <h1>Give feedback</h1>
+        <Button handleFeedback={incrementGood}  text='good'/>
+        <Button handleFeedback={incrementNeutral}  text='neutral'/>
+        <Button handleFeedback={incrementBad}  text='bad'/>
+        <h1>Statistics</h1>
+        <Display text='good' count={good}/>
+        <Display text='neutral' count={neutral}/>
+        <Display text='bad' count={bad}/>
+      </div>
     </>
   )
 }

@@ -17,12 +17,15 @@ const Statistics = ({name, parts}) => {
 
   return (
     <>
-      <Display name={parts[0].name} parts={parts[0].value} />
-      <Display name={parts[1].name} parts={parts[1].value} />
-      <Display name={parts[2].name} parts={parts[2].value} />
-      <Display name={parts[3].name} parts={parts[3].value} />
-      <Display name={parts[4].name} parts={parts[4].value} />
-      <Display name={parts[5].name} parts={parts[5].value} />
+      <div>
+        <h1>{name}</h1>
+        <Display name={parts[0].name} parts={parts[0].value} />
+        <Display name={parts[1].name} parts={parts[1].value} />
+        <Display name={parts[2].name} parts={parts[2].value} />
+        <Display name={parts[3].name} parts={parts[3].value} />
+        <Display name={parts[4].name} parts={parts[4].value} />
+        <Display name={parts[5].name} parts={parts[5].value} />
+      </div>
     </>
   );
 };

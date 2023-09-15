@@ -1,7 +1,15 @@
 import { useState } from "react"
 
 const Button = ({handleFeedback, name}) => <button onClick={handleFeedback}>{name}</button>;
-const StatisticsLine = ({name, parts}) => <div>{name}: {parts}</div>;
+
+const StatisticsLine = ({name, parts}) => {
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>{parts}</td>
+    </tr>
+  )
+};
 
 const Statistics = ({name, parts}) => {
 
@@ -20,12 +28,16 @@ const Statistics = ({name, parts}) => {
     <>
       <div>
         <h1>{name}</h1>
-        <StatisticsLine name={parts[0].name} parts={parts[0].value} />
-        <StatisticsLine name={parts[1].name} parts={parts[1].value} />
-        <StatisticsLine name={parts[2].name} parts={parts[2].value} />
-        <StatisticsLine name={parts[3].name} parts={parts[3].value} />
-        <StatisticsLine name={parts[4].name} parts={parts[4].value} />
-        <StatisticsLine name={parts[5].name} parts={parts[5].value} />
+        <table>
+          <tbody>
+            <StatisticsLine name={parts[0].name} parts={parts[0].value} />
+            <StatisticsLine name={parts[1].name} parts={parts[1].value} />
+            <StatisticsLine name={parts[2].name} parts={parts[2].value} />
+            <StatisticsLine name={parts[3].name} parts={parts[3].value} />
+            <StatisticsLine name={parts[4].name} parts={parts[4].value} />
+            <StatisticsLine name={parts[5].name} parts={parts[5].value} />
+          </tbody>
+        </table>
       </div>
     </>
   );

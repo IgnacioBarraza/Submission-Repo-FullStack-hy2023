@@ -11,7 +11,7 @@ export default function Content({course}) {
             <br />
             <Part name={course.parts[2].name} exercises={course.parts[2].exercises} />
             <br />
-            <Total parts={course.parts} />
+            <Total exercises={course.parts} />
         </>
     )
 }

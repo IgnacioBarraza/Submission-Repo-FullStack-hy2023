@@ -1,8 +1,11 @@
-export const Total = ({parts}) => {
-    const total = parts[0].exercises +  parts[1].exercises + parts[2].exercises;
+export const Total = ({exercises}) => {
+    const totalSum = exercises.reduce((s, p) => {
+        return s + p.exercises
+    }, 0)
+    console.log(totalSum);
     return (
         <>
-            <span>Total of {total} exercises</span>
+            <span>Total of {totalSum} exercises</span>
         </>
     )
 }

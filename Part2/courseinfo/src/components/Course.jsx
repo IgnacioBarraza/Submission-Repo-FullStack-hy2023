@@ -1,12 +1,11 @@
 import Content from "./Content";
 import { Header } from "./header";
 
-export default function Course({ course }) {
-  console.log(course);
+export default function Course({ courses }) {
   return (
     <>
-      <Header course={course} />
-      <Content course={course} />
+      <Header course={courses} />
+      <Content course={courses} />
     </>
   );
 };

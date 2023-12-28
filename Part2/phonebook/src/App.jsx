@@ -11,6 +11,11 @@ function App() {
   const onSubmit = (event) => {
     event.preventDefault();
     if (newName === '') return;
+    if (persons.some(person => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      setNewName('')
+      return;
+    } 
     // Add person to state array
     setPersons([...persons, {name: newName}]);
     setNewName(''); // clear the input field after adding a new person

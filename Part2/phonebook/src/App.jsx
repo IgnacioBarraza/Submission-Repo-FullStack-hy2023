@@ -11,30 +11,43 @@ function App() {
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  
+  const [searchTerm, setSearchTerm] = useState('');
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (newName === '') return;
-    if (newNumber === '') return;
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName('')
+    if (newName === '' || newNumber === '') {
+      alert('Name and number are required');
       return;
-    } 
+    }
     if (persons.some(person => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
       setNewName('')
       return;
     } 
     // Add person to state array
-    setPersons([...persons, {name: newName}]);
+    setPersons([...persons, {name: newName, number: newNumber}]);
     setNewName(''); // clear the input field after adding a new person
+    setNewNumber('');
   }
+
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
       <div>
         <h2>Phonebook list</h2>
+        <label>
+        Search by Name:
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </label>
+        <h2>Add a new</h2>
         <form onSubmit={onSubmit}>
           <label htmlFor="name">Name: </label>
           <input type='text' value={newName} onChange={(e) => setNewName(e.target.value)} id='name'/>
@@ -44,7 +57,7 @@ function App() {
         </form>
         <h2>Numbers</h2>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {persons.map((person)  => {
+          {filteredPersons.map((person)  => {
             return <span key={person}>{person.name} - {person.number}</span>
           })}
         </div>

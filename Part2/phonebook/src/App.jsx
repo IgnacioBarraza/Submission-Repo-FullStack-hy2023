@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import './App.css'
+import { Filter } from './components/filter';
+import { AddPersonForm } from './components/personform';
+import { PersonList } from './components/personfilter';
 
 function App() {
   const [persons, setPersons] = useState([
@@ -8,10 +11,9 @@ function App() {
       name: 'Arthur King',
       number: 56968838945
     },
-  ])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  
+  ]);
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
   const onSubmit = (event) => {
@@ -27,7 +29,8 @@ function App() {
     } 
     // Add person to state array
     setPersons([...persons, {name: newName, number: newNumber}]);
-    setNewName(''); // clear the input field after adding a new person
+    // clear the input field after adding a new person
+    setNewName('');
     setNewNumber('');
   }
 
@@ -39,28 +42,17 @@ function App() {
     <>
       <div>
         <h2>Phonebook list</h2>
-        <label>
-        Search by Name:
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </label>
+        <Filter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <h2>Add a new</h2>
-        <form onSubmit={onSubmit}>
-          <label htmlFor="name">Name: </label>
-          <input type='text' value={newName} onChange={(e) => setNewName(e.target.value)} id='name'/>
-          <label htmlFor='number'>Number: </label>
-          <input type='number' value={newNumber} onChange={(e) => setNewNumber(e.target.value)} id='number' />
-          <button type='submit'>Add person</button>
-        </form>
+        <AddPersonForm
+          newName={newName}
+          setNewName={setNewName}
+          newNumber={newNumber}
+          setNewNumber={setNewNumber}
+          onSubmit={onSubmit}
+        />
         <h2>Numbers</h2>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {filteredPersons.map((person)  => {
-            return <span key={person}>{person.name} - {person.number}</span>
-          })}
-        </div>
+        <PersonList filteredPersons={filteredPersons} />
       </div>
     </>
   )

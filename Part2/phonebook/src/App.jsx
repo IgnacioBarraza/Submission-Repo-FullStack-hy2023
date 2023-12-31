@@ -1,17 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { Filter } from './components/filter';
 import { AddPersonForm } from './components/personform';
 import { PersonList } from './components/personfilter';
+import axios from 'axios'
 
 function App() {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arthur King',
-      number: 56968838945
-    },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,6 +33,12 @@ function App() {
   const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then(response => {
+      setPersons(response.data);
+    })
+  }, []);
 
   return (
     <>

@@ -24,8 +24,14 @@ function App() {
       return;
     } 
     // Add person to state array
-    setPersons([...persons, {name: newName, number: newNumber}]);
-    // clear the input field after adding a new person
+    const newPerson = {
+      name: newName,
+      number: newNumber,
+      id: persons.length + 1
+    }
+
+    axios.post('http://localhost:3001/persons', newPerson)
+    setPersons(persons.concat(newPerson));
     setNewName('');
     setNewNumber('');
   }

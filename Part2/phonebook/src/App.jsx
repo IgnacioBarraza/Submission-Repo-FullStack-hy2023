@@ -4,7 +4,7 @@ import './App.css'
 import { Filter } from './components/filter';
 import { AddPersonForm } from './components/personform';
 import { PersonList } from './components/personfilter';
-import axios from 'axios'
+import jsonService from './service/jsonService';
 
 function App() {
   const [persons, setPersons] = useState([]);
@@ -30,7 +30,7 @@ function App() {
       id: persons.length + 1
     }
 
-    axios.post('http://localhost:3001/persons', newPerson)
+    jsonService.createNote(newPerson)
     setPersons(persons.concat(newPerson));
     setNewName('');
     setNewNumber('');
@@ -41,8 +41,8 @@ function App() {
   );
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      setPersons(response.data);
+    jsonService.getAll().then( res => {
+      setPersons(res.data);
     })
   }, []);
 

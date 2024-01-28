@@ -1,39 +1,19 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "Holanda",
-      "number": "11241341235",
-      "id": 5
-    },
-    {
-      "name": "asdgsdg",
-      "number": "123413251",
-      "id": 6
-    },
-    {
       "name": "holanda mai brother",
       "number": "12134135",
       "id": 7
+    },
+    {
+      "name": "asdgsdga",
+      "number": "12341313",
+      "id": 8
+    },
+    {
+      "name": "sadgasga",
+      "number": "1231235123",
+      "id": 9
     }
   ]
 }

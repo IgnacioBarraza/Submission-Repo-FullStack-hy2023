@@ -27,23 +27,38 @@ function App() {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: persons[persons.length - 1].id + 1 
     }
-
-    jsonService.createNote(newPerson)
+    jsonService.createNote(newPerson);
     setPersons(persons.concat(newPerson));
-    setNewName('');
-    setNewNumber('');
+    setNewName("");
+    setNewNumber("");
   }
 
   const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  useEffect(() => {
+  const deletePerson = (event) => {
+    if (window.confirm(`Are you sure you want to delete ${event.name}`)) {
+      console.log(event.id);
+      jsonService.deleteNote(event.id).then(res => {
+        if (res.status === 200) {
+          console.log(res);
+          getPersons()
+        }
+      })
+    }
+  }
+
+  const getPersons = () => {
     jsonService.getAll().then( res => {
       setPersons(res.data);
     })
+  }
+
+  useEffect(() => {
+    getPersons()
   }, []);
 
   return (
@@ -60,7 +75,7 @@ function App() {
           onSubmit={onSubmit}
         />
         <h2>Numbers</h2>
-        <PersonList filteredPersons={filteredPersons} />
+        <PersonList filteredPersons={filteredPersons} deletePerson={deletePerson} />
       </div>
     </>
   )

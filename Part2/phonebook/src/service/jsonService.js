@@ -14,8 +14,13 @@ const createNote = (newNote) => {
   return axios.post(`${baseUrl}`, newNote)
 }
 
+const deleteNote = (id) => {
+  return axios.delete(`${baseUrl}/${id}`)
+}
+
 export default {
   getAll: getAllNotes,
   getNote: getNote,
-  createNote: createNote
+  createNote: createNote,
+  deleteNote: deleteNote
 }

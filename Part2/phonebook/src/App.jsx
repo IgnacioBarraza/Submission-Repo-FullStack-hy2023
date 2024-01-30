@@ -18,19 +18,36 @@ function App() {
       alert('Name and number are required');
       return;
     }
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName('')
+    const existingPerson = persons.find((person) => person.name === newName);
+    if (existingPerson) {
+      const isToUpdate = window.confirm(`${newName} is already added to phonebook, do you want to update the number?`);
+      if (isToUpdate) {
+        const updatePerson = {
+          name: newName,
+          number: newNumber,
+        }
+        jsonService.updateNote(existingPerson.id, updatePerson).then(res => {
+          if (res.status === 200) {
+            getPersons();
+          }
+        });
+        setNewName('');
+        setNewNumber('');
+        return;
+      }
+      alert(`${newName} is already added to phonebook and not would be updated`);
+      setNewName('');
+      setNewNumber("");
       return;
     } 
     // Add person to state array
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons[persons.length - 1].id + 1 
+      id: persons[persons.length - 1]?.id + 1 
     }
-    jsonService.createNote(newPerson);
-    setPersons(persons.concat(newPerson));
+    jsonService.createNote(newPerson).then();
+    getPersons();
     setNewName("");
     setNewNumber("");
   }
@@ -41,10 +58,8 @@ function App() {
 
   const deletePerson = (event) => {
     if (window.confirm(`Are you sure you want to delete ${event.name}`)) {
-      console.log(event.id);
       jsonService.deleteNote(event.id).then(res => {
         if (res.status === 200) {
-          console.log(res);
           getPersons()
         }
       })

@@ -4,6 +4,7 @@ import './App.css'
 import { Filter } from './components/filter';
 import { AddPersonForm } from './components/personform';
 import { PersonList } from './components/personfilter';
+import { Notification } from "./components/message";
 import jsonService from './service/jsonService';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [message, setMessage] = useState(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -28,9 +30,13 @@ function App() {
         }
         jsonService.updateNote(existingPerson.id, updatePerson).then(res => {
           if (res.status === 200) {
+            setMessage(`${newPerson.name} updated successfully`);
             getPersons();
           }
         });
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000)
         setNewName('');
         setNewNumber('');
         return;
@@ -46,7 +52,14 @@ function App() {
       number: newNumber,
       id: persons[persons.length - 1]?.id + 1 
     }
-    jsonService.createNote(newPerson).then();
+    jsonService.createNote(newPerson).then(res => {
+      if (res.status === 201) {
+        setMessage(`${newPerson.name} added successfully`);
+      }
+    });
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000)
     getPersons();
     setNewName("");
     setNewNumber("");
@@ -82,6 +95,7 @@ function App() {
         <h2>Phonebook list</h2>
         <Filter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <h2>Add a new</h2>
+        <Notification message={message}></Notification>
         <AddPersonForm
           newName={newName}
           setNewName={setNewName}

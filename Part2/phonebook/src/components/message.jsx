@@ -8,7 +8,7 @@ export const Notification = ({message}) => {
     return (
       <>
         <div className="message success">
-          <span className='success-text'>{ message }</span>
+          <span className='message-text'>{ message }</span>
         </div>
       </>
     )
@@ -16,7 +16,7 @@ export const Notification = ({message}) => {
     return (
       <>
         <div className="message error">
-          <span>{ message }</span>
+          <span className='message-text'>{ message }</span>
         </div>
       </>
     )

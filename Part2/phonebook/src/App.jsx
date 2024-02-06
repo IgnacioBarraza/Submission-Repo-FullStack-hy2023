@@ -13,6 +13,7 @@ function App() {
   const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [message, setMessage] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -28,12 +29,19 @@ function App() {
           name: newName,
           number: newNumber,
         }
-        jsonService.updateNote(existingPerson.id, updatePerson).then(res => {
+        jsonService.updateNote(existingPerson.id, updatePerson)
+        .then(res => {
           if (res.status === 200) {
             setMessage(`${newPerson.name} updated successfully`);
             getPersons();
           }
-        });
+        })
+        .catch(error => {
+          setErrorMsg(`${newPerson.name}'s has been deleted from server`);
+          setTimeout(() => {
+            setErrorMsg(null);
+          }, 10000)
+        })
         setTimeout(() => {
           setMessage(null);
         }, 5000)

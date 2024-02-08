@@ -54,9 +54,14 @@ function App() {
     <div>
       <span>Find countries </span>
       <input onChange={Searcher} value={search}/>
-      <Message msg={msg}></Message>
-      <CountryList countries={results}></CountryList>
-      <Country country={country}></Country>
+      <Message msg={msg} />
+      {
+        results === null ? '' :
+        results.map( (country, index) => {
+          return <CountryList data={country} key={index} />
+        })
+      }
+      <Country country={country} />
     </div>
     </>
   )

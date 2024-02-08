@@ -1,4 +1,4 @@
-import './country.css'
+import '../App.css'
 
 export const Country = ({ country }) => {
   if (country === null) return null;

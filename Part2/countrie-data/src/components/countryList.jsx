@@ -1,14 +1,22 @@
-export const CountryList = ({ countries }) => {
-  if (countries === null) {
-    return null
+import '../App.css'
+import { useState } from "react";
+import { Country } from './country';
+
+export const CountryList = ({ data }) => {
+  const [country, setCountry] = useState(null)
+
+  if (data === null) return null
+  console.log(data)
+  const showCountry = () => {
+    setCountry(data)
   }
   return (
     <>
-      {countries.map(country => (
-              <div key={country.area}>
-                <span key={country.flag}>{country.name.common}</span>
-              </div>
-          ))}
+      <div className='country-list'>
+        <span className='country-text'>{data.name.common}</span>
+        <button onClick={showCountry} className="country-btn">Show</button>
+        <Country country={country} />
+      </div>
     </>
-  )
+  );
 }

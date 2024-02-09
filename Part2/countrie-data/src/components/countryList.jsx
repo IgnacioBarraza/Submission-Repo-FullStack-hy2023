@@ -6,7 +6,6 @@ export const CountryList = ({ data }) => {
   const [country, setCountry] = useState(null)
 
   if (data === null) return null
-  console.log(data)
   const showCountry = () => {
     setCountry(data)
   }

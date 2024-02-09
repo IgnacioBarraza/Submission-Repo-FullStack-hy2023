@@ -5,7 +5,8 @@
 }
 
 .country-name,
-.country-text {
+.country-text,
+.weather-text {
   color: #000;
   font-family: monospace;
 }
@@ -36,4 +37,14 @@
   align-items: baseline;
   justify-content: center;
   flex-direction: column;
+}
+
+.weather-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-text {
+  font-size: 16px;
+  font-weight: 600;
 }

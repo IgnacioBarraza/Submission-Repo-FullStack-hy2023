@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json())
+
 let persons = [
   { 
     "id": 1,
@@ -23,6 +25,13 @@ let persons = [
     "number": "39-23-6423122"
   }
 ]
+
+const generatePersonId = () => {
+  const maxId = persons.length > 0
+  ? Math.max(...persons.map( p => p.id ))
+  : 0
+  return maxId + 1;
+}
 
 app.get('/api/info', (req, res) => {
   const num = persons.length
@@ -47,6 +56,23 @@ app.delete('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id);
   persons = persons.filter(person => person.id !== id);
   res.json(204).end();
+});
+
+app.post('/api/persons', (req, res) => {
+  const person = req.body;
+  console.log(person);
+
+  if (!person.name) return res.status(400).json({
+    error: 'Content missing'
+  });
+
+  const newPerson = {
+    name: person.name,
+    number: person.number,
+    id: generatePersonId()
+  }
+  persons.concat(newPerson);
+  res.json(person);
 })
 
 const PORT = 3001;

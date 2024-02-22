@@ -1,0 +1,12 @@
+### To test the backend services
+### To get all the data use: GET http://localhost:3001/api/persons
+### To create a person use: POST http://localhost:3001/api/persons Content-Type: application/json
+{
+  "name": "Your Name", "number": "111022234"
+}
+### To change the name or number of person use: PUT http://localhost:3001/api/persons Content-Type: application/json
+{
+  "name": "new Name", "number": "123415135"
+}
+### To delete a person use: DELETE http://localhost:3001/api/persons/1
+### The number after .../api/persons/ refers to the person id

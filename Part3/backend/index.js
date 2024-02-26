@@ -38,22 +38,17 @@ app.get('/api/persons', (req, res) => {
 //   res.json(204).end();
 // });
 
-// app.post('/api/persons', (req, res) => {
-//   const body = req.body;
-
-//   if (body.name === undefined) return res.status(400).json({
-//     error: 'Name missing'
-//   });
-
-//   const person = new Person({
-//     name: body.name, 
-//     number: body.number,
-//   })
-
-//   person.save().then( savedPerson => {
-//     res.json(savedPerson);
-//   })
-// })
+app.post('/api/persons', (req, res) => {
+  const body = req.body;
+  if (body.name === undefined) return res.status(400).json({ error: 'Name missing' });
+  const person = new Person({
+    name: body.name, 
+    number: body.number,
+  });
+  person.save().then( savedPerson => {
+    res.json(savedPerson);
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Backend Up! ✨🚀, listening on port: ${PORT}`);

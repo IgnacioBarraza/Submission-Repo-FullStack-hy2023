@@ -25,18 +25,28 @@ app.get('/api/persons', (req, res) => {
   })
 });
 
-// app.get('/api/persons/:id', (req, res) => {
-//   const id = req.params.id;
-//   Person.findById(id).then(person => {
-//     res.json(person);
-//   })
-// });
+app.get('/api/persons/:id', (req, res, next) => {
+  const id = req.params.id;
+  Person.findById(id)
+        .then(person => {
+          if (person) {
+            res.json(person)
+          } else {
+            console.log('No person found by the id: ', id);
+            res.status(404).end()
+          }
+        })
+        .catch(error => next( error ))
+});
 
-// app.delete('/api/persons/:id', (req, res) => {
-//   const id = Number(req.params.id);
-//   persons = persons.filter(person => person.id !== id);
-//   res.json(204).end();
-// });
+app.delete('/api/persons/:id', (req, res, next) => {
+  const id = req.params.id;
+  Person.findByIdAndDelete(id)
+        .then( result => {
+          res.status(204).end();
+        })
+        .catch(error => next( error ))
+});
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
@@ -49,6 +59,30 @@ app.post('/api/persons', (req, res) => {
     res.json(savedPerson);
   });
 });
+
+// app.put('/api/persons/:id', (req, res, next) => {
+//   const id = req.params.id;
+//   const body = req.body;
+
+//   const updatePerson = {
+//     name: body.name,
+//     number: body.number
+//   };
+//   Person.findByIdAndUpdate(id, updatePerson, {new: true})
+//         .then( updatedPerson => {
+//           res.json(updatedPerson)
+//         })
+//         .catch( error => next(error) )
+// });
+
+const errorHandler = (error, req, res, next) => {
+  console.error(error);
+  if (error.name === 'CastError') return res.status(400).send({ error: 'Bad format for the id :/' });
+
+  next(error);
+};
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Backend Up! ✨🚀, listening on port: ${PORT}`);

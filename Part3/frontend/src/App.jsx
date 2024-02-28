@@ -80,7 +80,7 @@ function App() {
   const deletePerson = (event) => {
     if (window.confirm(`Are you sure you want to delete ${event.name}`)) {
       jsonService.deleteNote(event.id).then(res => {
-        if (res.status === 200) {
+        if (res.status === 204) {
           getPersons()
         }
       })

@@ -32,12 +32,12 @@ function App() {
         jsonService.updateNote(existingPerson.id, updatePerson)
         .then(res => {
           if (res.status === 200) {
-            setMessage(`${newPerson.name} updated successfully`);
+            setMessage(`${updatePerson.name} updated successfully`);
             getPersons();
           }
         })
         .catch(error => {
-          setErrorMsg(`${newPerson.name}'s has been deleted from server`);
+          setErrorMsg(`${updatePerson.name}'s has been deleted from server`);
           setTimeout(() => {
             setErrorMsg(null);
           }, 10000)

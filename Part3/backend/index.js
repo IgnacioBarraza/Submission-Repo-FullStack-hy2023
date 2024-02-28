@@ -84,6 +84,12 @@ const errorHandler = (error, req, res, next) => {
 
 app.use(errorHandler);
 
+const invalidEndpoint = (req, res) => {
+  return res.status(404).send({ error: 'this endpoint does not exist 🤔' });
+}
+
+app.use(invalidEndpoint);
+
 app.listen(PORT, () => {
   console.log(`Backend Up! ✨🚀, listening on port: ${PORT}`);
 });

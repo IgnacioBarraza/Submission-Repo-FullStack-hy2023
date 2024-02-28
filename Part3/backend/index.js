@@ -16,7 +16,7 @@ app.use(express.static('dist'));
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 
 app.get('/api/info', async (req, res) => {
-  let num = await Person.countDocuments({}).then()
+  let num = await Person.countDocuments({}).then();
   console.log(num);
   res.send(
     `<h1>Phonebook info</h1>
@@ -30,7 +30,7 @@ app.get('/api/info', async (req, res) => {
 app.get('/api/persons', (req, res) => {
   Person.find({}).then( person => {
     res.json(person);
-  })
+  });
 });
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -38,13 +38,13 @@ app.get('/api/persons/:id', (req, res, next) => {
   Person.findById(id)
         .then(person => {
           if (person) {
-            res.json(person)
+            res.json(person);
           } else {
             console.log('No person found by the id: ', id);
-            res.status(404).end()
+            res.status(404).end();
           }
         })
-        .catch(error => next( error ))
+        .catch(error => next( error ));
 });
 
 app.delete('/api/persons/:id', (req, res, next) => {
@@ -53,13 +53,13 @@ app.delete('/api/persons/:id', (req, res, next) => {
         .then( result => {
           res.status(204).end();
         })
-        .catch(error => next( error ))
+        .catch(error => next( error ));
 });
 
 app.post('/api/persons', (req, res, next) => {
   const body = req.body;
   const person = new Person({
-    name: body.name, 
+    name: body.name,
     number: body.number,
   });
   person.save()
@@ -71,26 +71,25 @@ app.post('/api/persons', (req, res, next) => {
 
 app.put('/api/persons/:id', (req, res, next) => {
   const id = req.params.id;
-  const {name, number} = req.body;
-  Person.findByIdAndUpdate(id, {name, number}, {new: true, runValidators: true, context: 'query'})
+  const { name, number } = req.body;
+  Person.findByIdAndUpdate(id, { name, number }, { new: true, runValidators: true, context: 'query' })
         .then( updatedPerson => {
-          res.json(updatedPerson)
+          res.json(updatedPerson);
         })
-        .catch( error => next(error) )
+        .catch( error => next(error) );
 });
 
 const errorHandler = (error, req, res, next) => {
   console.error(error);
   if (error.name === 'CastError') {
-    return res.status(400).send({ error: 'Bad format for the id :/' })
+    return res.status(400).send({ error: 'Bad format for the id :/' });
   } else if (error.name === 'ValidationError') {
     if (error.errors.name) {
-      return res.status(400).send({ error: error.errors.name.message })
+      return res.status(400).send({ error: error.errors.name.message });
     } else if (error.errors.number) {
-      return res.status(400).send({ error: error.errors.number.message })
+      return res.status(400).send({ error: error.errors.number.message });
     }
-  };
-
+  }
   next(error);
 };
 
@@ -98,7 +97,7 @@ app.use(errorHandler);
 
 const invalidEndpoint = (req, res) => {
   return res.status(404).send({ error: 'this endpoint does not exist 🤔' });
-}
+};
 
 app.use(invalidEndpoint);
 

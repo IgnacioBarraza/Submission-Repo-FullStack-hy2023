@@ -13,7 +13,6 @@ function App() {
   const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [message, setMessage] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -37,9 +36,9 @@ function App() {
           }
         })
         .catch(error => {
-          setErrorMsg(`${updatePerson.name}'s has been deleted from server`);
+          setMessage(`${updatePerson.name}'s has been deleted from server`);
           setTimeout(() => {
-            setErrorMsg(null);
+            setMessage(null);
           }, 10000)
         })
         setTimeout(() => {
@@ -60,14 +59,23 @@ function App() {
       number: newNumber,
       id: persons[persons.length - 1]?.id + 1 
     }
-    jsonService.createNote(newPerson).then(res => {
-      if (res.status === 201) {
+    jsonService
+    .createNote(newPerson)
+    .then(res => {
+      if (res.status === 200) {
         setMessage(`${newPerson.name} added successfully`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000)
       }
+    })
+    .catch( error => {
+      console.log(error);
+      setMessage(error.response.data.error);
+      setTimeout(() => {
+        setMessage(null);
+      }, 10000)
     });
-    setTimeout(() => {
-      setMessage(null);
-    }, 5000)
     getPersons();
     setNewName("");
     setNewNumber("");

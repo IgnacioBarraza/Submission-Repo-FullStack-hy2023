@@ -84,7 +84,11 @@ const errorHandler = (error, req, res, next) => {
   if (error.name === 'CastError') {
     return res.status(400).send({ error: 'Bad format for the id :/' })
   } else if (error.name === 'ValidationError') {
-    return res.status(400).send({ error: error.errors.name.message })
+    if (error.errors.name) {
+      return res.status(400).send({ error: error.errors.name.message })
+    } else if (error.errors.number) {
+      return res.status(400).send({ error: error.errors.number.message })
+    }
   };
 
   next(error);

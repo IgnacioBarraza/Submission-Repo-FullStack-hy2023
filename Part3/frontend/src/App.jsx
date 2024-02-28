@@ -70,11 +70,14 @@ function App() {
       }
     })
     .catch( error => {
-      console.log(error);
-      setMessage(error.response.data.error);
-      setTimeout(() => {
-        setMessage(null);
-      }, 10000)
+      if (error.response.data.error) {
+        setMessage(error.response.data.error);
+        setTimeout(() => {
+          setMessage(null);
+        }, 10000)
+      } else {
+        console.log(error.response.data);
+      }
     });
     getPersons();
     setNewName("");

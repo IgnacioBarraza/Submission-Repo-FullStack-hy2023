@@ -15,8 +15,16 @@ app.use(express.static('dist'));
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 mongoose.set('strictQuery',false);
 
-app.get('/api/info', (req, res) => {
-  res.send('<h1> Holanda que talca como andamio</h1>');
+app.get('/api/info', async (req, res) => {
+  let num = await Person.countDocuments({}).then()
+  console.log(num);
+  res.send(
+    `<h1>Phonebook info</h1>
+    <br/>
+    <h3>Phonebook backend has data for: ${num}</h3>
+    <br/>
+    <h3>Time for the request: ${Date()}</h3>
+  `);
 });
 
 app.get('/api/persons', (req, res) => {

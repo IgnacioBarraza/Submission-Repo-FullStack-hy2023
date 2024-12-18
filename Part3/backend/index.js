@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Person = require('./mongo_db/person');
 const PORT = process.env.PORT;
+const logger = require('./utils/logger');
 
 mongoose.set('strictQuery',false);
 app.use(express.json());
@@ -17,7 +18,7 @@ morgan.token('body', (req, res) => JSON.stringify(req.body));
 
 app.get('/api/info', async (req, res) => {
   let num = await Person.countDocuments({}).then();
-  console.log(num);
+  logger.info(num);
   res.send(
     `<h1>Phonebook info</h1>
     <br/>
@@ -40,7 +41,7 @@ app.get('/api/persons/:id', (req, res, next) => {
           if (person) {
             res.json(person);
           } else {
-            console.log('No person found by the id: ', id);
+            logger.info('No person found by the id: ', id);
             res.status(404).end();
           }
         })
@@ -80,7 +81,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 });
 
 const errorHandler = (error, req, res, next) => {
-  console.error(error);
+  logger.error(error);
   if (error.name === 'CastError') {
     return res.status(400).send({ error: 'Bad format for the id :/' });
   } else if (error.name === 'ValidationError') {
@@ -102,5 +103,5 @@ const invalidEndpoint = (req, res) => {
 app.use(invalidEndpoint);
 
 app.listen(PORT, () => {
-  console.log(`Backend Up! ✨🚀, listening on port: ${PORT}`);
+  logger.info(`Backend Up! ✨🚀, listening on port: ${PORT}`);
 });
